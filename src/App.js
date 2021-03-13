@@ -8,14 +8,14 @@ function App() {
     const [listOfSquares, setListOfSquares] = useState([]);
 
     const addSquare = () => {
-        Axios.post('http://localhost:3001/addsquare', {name: name, size: size}).then(response => setListOfSquares(
+        Axios.post('https://riismus.herokuapp.com/addsquare', {name: name, size: size}).then(response => setListOfSquares(
             [...listOfSquares, {_id: response.data._id, name: name, size: size}
     ]))
     };
 
     const updateSquareSize = (id) => {
         const newSize = prompt("Enter new size:");
-        Axios.put('http://localhost:3001/updatesquaresize', {size: newSize, id: id}).then(() => {
+        Axios.put('https://riismus.herokuapp.com/updatesquaresize', {size: newSize, id: id}).then(() => {
             setListOfSquares(listOfSquares.map(value => {
                 return id === value._id ? {_id: id, name: value.name, size: newSize} : value;
             }));
@@ -24,7 +24,7 @@ function App() {
     };
 
     const deleteSquare = (id) => {
-        Axios.delete(`http://localhost:3001/delete/${id}`).then(() => {
+        Axios.delete(`https://riismus.herokuapp.com/delete/${id}`).then(() => {
             setListOfSquares(listOfSquares.filter(value => {
                 return value._id !== id;
             }))
@@ -32,7 +32,7 @@ function App() {
     };
 
     useEffect(() => {
-        Axios.get('http://localhost:3001/read').then(response => {
+        Axios.get('https://riismus.herokuapp.com/read').then(response => {
             setListOfSquares(response.data)
         })
     }, []);
